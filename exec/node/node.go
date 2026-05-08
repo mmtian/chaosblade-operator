@@ -50,6 +50,12 @@ func NewResourceModelSpec(client *channel.Client) model.ResourceExpModelSpec {
 	spec.AddFlagsToModelSpec(getResourceFlags, expModelSpecs...)
 	spec.AddFlagsToModelSpec(osModel.GetSSHExpFlags, expModelSpecs...)
 	modelSpec.RegisterExpModels(osModelSpecs...)
+
+	// Register CSI fault injection model spec
+	csiModelSpec := NewCsiExpModelCommandSpec(client)
+	spec.AddFlagsToModelSpec(getResourceFlags, csiModelSpec)
+	modelSpec.RegisterExpModels(csiModelSpec)
+
 	addActionExamples(modelSpec)
 	return modelSpec
 }
